@@ -7,4 +7,12 @@
 
 <script setup>
 import TheNav from '@/components/TheNav.vue'
+import { useNotesStore } from '@/stores/notesStore'
+import { onMounted } from 'vue'
+
+const storeNotes = useNotesStore()
+
+onMounted(() => {
+  storeNotes.getNotes()
+})
 </script>

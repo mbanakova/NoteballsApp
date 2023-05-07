@@ -1,33 +1,34 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
+import { collection, doc, onSnapshot, setDoc } from "firebase/firestore"
+import { db } from '@/js/firebase.js'
+
+const notesCollectionRef = collection(db, "notes")
 
 export const useNotesStore = defineStore('notes', () => {
-  const notes = ref([
-    {
-      id: 'id1',
-      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, velit!'
-    },
-    {
-      id: 'id2',
-      content: 'Lorem ipsum do tur adifddfpisicing elit. Totam, velit!'
-    },
-    {
-      id: 'id3',
-      content: '111Lorem ipsum dolor sit amet consectetur adipi'
-    }
-  ])
+  const notes = ref([])
 
+  const getNotes = async () => {
+    onSnapshot(notesCollectionRef, (querySnapshot) => {
+      let array = []
+      querySnapshot.forEach((doc) => {
+        let note = {
+          id: doc.id,
+          content: doc.data().content,
+        }
+        array.push(note)
+      });
+      notes.value = array
+    });
+  }
 
-  const addNote = (content) => {
-    console.log('add note ' + content);
+  const addNote = async (content) => {
+    let id = uuidv4()
 
-    let note = {
-      id: uuidv4(),
+    await setDoc(doc(notesCollectionRef, id), {
       content
-    }
-
-    notes.value.unshift(note)
+    });
   }
 
   const deleteNote = (id) => {
@@ -58,5 +59,5 @@ export const useNotesStore = defineStore('notes', () => {
     return count
   }
 
-  return { notes, addNote, deleteNote, getNoteContent, updateNote, totalNotesCount, totalCharsCount }
+  return { notes, getNotes, addNote, deleteNote, getNoteContent, updateNote, totalNotesCount, totalCharsCount }
 })
