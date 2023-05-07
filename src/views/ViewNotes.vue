@@ -11,7 +11,16 @@
       </template>
     </AddEditNote>
 
-    <NoteCard class="card" v-for="note in notesStore.notes" :key="note.id" :note="note"></NoteCard>
+    <CssLoader v-if="!notesStore.notesLoaded" />
+    <template v-else>
+      <NoteCard
+        class="card"
+        v-for="note in notesStore.notes"
+        :key="note.id"
+        :note="note"
+      ></NoteCard>
+      <div v-if="!notesStore.notes.length">нет записей</div>
+    </template>
   </div>
 </template>
 
@@ -21,6 +30,7 @@ import { useNotesStore } from '@/stores/notesStore'
 import { useWatchCharacters } from '@/use/useWatchCharacters.js'
 import AddEditNote from '@/components/Notes/AddEditNote.vue'
 import NoteCard from '@/components/Notes/NoteCard.vue'
+import CssLoader from '@/components/CssLoader.vue'
 
 const notesStore = useNotesStore()
 const newNote = ref('')

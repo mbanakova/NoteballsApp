@@ -3,7 +3,8 @@
     <div class="card__content">
       {{ note.content }}
       <div class="card__content-length">
-        <small>{{ characterLength }}</small>
+        <small>Date {{ dateFormatted }} </small>
+        <small>&nbsp;{{ characterLength }}</small>
       </div>
     </div>
     <footer class="card__footer">
@@ -21,13 +22,18 @@
 <script setup>
 import { computed, reactive } from 'vue'
 import ModalDeleteNote from '@/components/Notes/ModalDeleteNote.vue'
-
+import { useDateFormat } from '@vueuse/core'
 // eslint-disable-next-line no-unused-vars
 const props = defineProps({
   note: {
     type: Object,
     required: true
   }
+})
+
+const dateFormatted = computed(() => {
+  let date = new Date(parseInt(props.note.date))
+  return useDateFormat(date, 'DD.MM.YYYY HH:mm').value
 })
 
 const characterLength = computed(() => {
