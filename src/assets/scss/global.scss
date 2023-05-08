@@ -14,8 +14,8 @@ html {
   width: 100%;
   min-width: 320px;
   min-height: 100vh;
-  color: $dark;
-  background-color: lighten($light, 23%);
+  color: $black;
+  background-color: $white;
   transition: color 0.5s, background-color 0.5s;
   font-size: 15px;
   line-height: 1.6;
@@ -64,8 +64,43 @@ img {
 }
 .nav-link {
   padding: 5px 20px;
-  background-color: aqua;
+  background-color: $light;
+  color: $white;
   text-decoration: none;
   border-radius: 4px;
   font-weight: 400;
+}
+
+.button {
+  padding: 10px 20px;
+  background-color: $success;
+  color: $white;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 6px;
+  font-weight: 400;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: $tr;
+
+  &:hover {
+    background-color: darken($success, 5%);
+  }
+
+  &--warning {
+    background-color: $bright;
+
+    &:hover {
+      background-color: darken($bright, 5%);
+    }
+  }
+
+  &--error {
+    background-color: $error;
+
+    &:hover {
+      background-color: darken($error, 5%);
+    }
+  }
 }

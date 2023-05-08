@@ -109,7 +109,7 @@ onUnmounted(() => {
 }
 
 .button {
-  background-color: $light;
+  background-color: $pale;
 
   &.is-success {
     background-color: $error;

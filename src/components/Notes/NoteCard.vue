@@ -3,8 +3,8 @@
     <div class="card__content">
       {{ note.content }}
       <div class="card__content-length">
-        <small>Date {{ dateFormatted }} </small>
-        <small>&nbsp;{{ characterLength }}</small>
+        <small class="card__date">Date {{ dateFormatted }} </small>
+        <small class="card__length">&nbsp;{{ characterLength }}</small>
       </div>
     </div>
     <footer class="card__footer">
@@ -53,6 +53,7 @@ const modals = reactive({
   padding: 20px;
   border-radius: 8px;
   background-color: $white;
+  box-shadow: $shadow;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -67,7 +68,12 @@ const modals = reactive({
   text-align: right;
   color: $border;
 }
-
+.card__date {
+  color: $success;
+}
+.card__length {
+  color: $accent;
+}
 .card__footer {
   display: flex;
   justify-content: space-between;

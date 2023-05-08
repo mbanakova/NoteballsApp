@@ -16,7 +16,9 @@
             <div class="bar"></div>
           </button>
         </div>
-
+        <div class="navbar__start">
+          <button class="button button--warning">Log out</button>
+        </div>
         <div
           class="navbar__links"
           :class="{ 'navbar__links--open': showMobileNav }"
@@ -68,7 +70,7 @@ onClickOutside(
 
 <style lang="scss" scoped>
 .header {
-  background-color: $accent;
+  background-color: $dark;
   color: $white;
   padding: 10px;
 }

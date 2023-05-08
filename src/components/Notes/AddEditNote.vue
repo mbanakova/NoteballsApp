@@ -25,7 +25,7 @@ const props = defineProps({
   },
   bgColor: {
     type: String,
-    default: 'success'
+    default: 'pale'
   },
   placeholder: {
     type: String,
@@ -54,11 +54,11 @@ defineExpose({ focusTextArea })
   gap: 10px;
 
   &--default {
-    background-color: $light;
+    background-color: $bright;
   }
 
-  &--success {
-    background-color: $success;
+  &--pale {
+    background-color: $pale;
   }
 }
 .form__textarea {
