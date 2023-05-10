@@ -7,12 +7,12 @@
 
 <script setup>
 import TheNav from '@/components/TheNav.vue'
-import { useNotesStore } from '@/stores/notesStore'
+import { useAuthStore } from '@/stores/authStore'
 import { onMounted } from 'vue'
 
-const storeNotes = useNotesStore()
+const authStore = useAuthStore()
 
 onMounted(() => {
-  storeNotes.getNotes()
+  authStore.init()
 })
 </script>

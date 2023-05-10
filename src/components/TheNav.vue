@@ -16,8 +16,10 @@
             <div class="bar"></div>
           </button>
         </div>
-        <div class="navbar__start">
-          <button class="button button--warning">Log out</button>
+        <div class="navbar__start" v-if="authStore.userData.id">
+          <button class="button button--warning" @click="logOut">
+            Log out {{ authStore.userData.email }}
+          </button>
         </div>
         <div
           class="navbar__links"
@@ -48,6 +50,8 @@
 <script setup>
 import { ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
+import { useAuthStore } from '@/stores/authStore.js'
+const authStore = useAuthStore()
 const showMobileNav = ref(false)
 
 const toggleMobileNav = () => {
@@ -66,6 +70,11 @@ onClickOutside(
     ignore: [navBarBurgerRef]
   }
 )
+
+const logOut = () => {
+  authStore.logoutUser()
+  showMobileNav.value = false
+}
 </script>
 
 <style lang="scss" scoped>

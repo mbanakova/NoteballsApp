@@ -25,10 +25,8 @@ export const useNotesStore = defineStore('notes', () => {
         array.push(note)
       });
 
-
       notes.value = array
       notesLoaded.value = true
-
     });
   }
 
