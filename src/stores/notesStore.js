@@ -38,7 +38,7 @@ export const useNotesStore = defineStore('notes', () => {
 
       notes.value = array
       notesLoaded.value = true
-    });
+    }, error => { console.log(error.message); });
   }
 
   const clearNotes = () => {
