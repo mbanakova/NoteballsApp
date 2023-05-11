@@ -4,17 +4,28 @@ import {
   collection, doc, onSnapshot, deleteDoc, updateDoc, query, orderBy, addDoc
 } from "firebase/firestore"
 import { db } from '@/js/firebase.js'
+import { useAuthStore } from '@/stores/authStore'
 
-const notesCollectionRef = collection(db, "notes")
-const notesCollectionQuery = query(notesCollectionRef, orderBy("date", "desc")) //, limit(2))
+
+let notesCollectionRef
+let notesCollectionQuery
+let getNotesSnapshot = null
 
 export const useNotesStore = defineStore('notes', () => {
   const notes = ref([])
   let notesLoaded = ref(false)
 
+  const init = () => {
+    const authStore = useAuthStore()
+    notesCollectionRef = collection(db, 'users', authStore.userData.id, 'notes')
+    notesCollectionQuery = query(notesCollectionRef, orderBy("date", "desc")) //, limit(2))
+    getNotes()
+  }
+
   const getNotes = async () => {
     notesLoaded.value = false
-    onSnapshot(notesCollectionQuery, (querySnapshot) => {
+
+    getNotesSnapshot = onSnapshot(notesCollectionQuery, (querySnapshot) => {
       let array = []
       querySnapshot.forEach((doc) => {
         let note = {
@@ -28,6 +39,11 @@ export const useNotesStore = defineStore('notes', () => {
       notes.value = array
       notesLoaded.value = true
     });
+  }
+
+  const clearNotes = () => {
+    notes.value = []
+    if (getNotesSnapshot) getNotesSnapshot()  //unsubscribe from any active listener
   }
 
   const addNote = async (content) => {
@@ -68,5 +84,5 @@ export const useNotesStore = defineStore('notes', () => {
     return count
   }
 
-  return { notes, notesLoaded, getNotes, addNote, deleteNote, getNoteContent, updateNote, totalNotesCount, totalCharsCount }
+  return { notes, notesLoaded, init, getNotes, clearNotes, addNote, deleteNote, getNoteContent, updateNote, totalNotesCount, totalCharsCount }
 })

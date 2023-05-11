@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useNotesStore } from '@/stores/notesStore'
 import { useWatchCharacters } from '@/use/useWatchCharacters.js'
 import AddEditNote from '@/components/Notes/AddEditNote.vue'
@@ -35,10 +35,6 @@ import CssLoader from '@/components/CssLoader.vue'
 const notesStore = useNotesStore()
 const newNote = ref('')
 const addEditNoteRef = ref(null)
-
-onMounted(() => {
-  notesStore.getNotes()
-})
 
 const addNote = (content) => {
   notesStore.addNote(content)
